@@ -4,7 +4,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Queue;
 
-public class CalcPromedioImpl implements  CalculoInt {
+public class CalcPromedioImpl implements CalculoInt {
 
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(CalcPromedioImpl.class);
 

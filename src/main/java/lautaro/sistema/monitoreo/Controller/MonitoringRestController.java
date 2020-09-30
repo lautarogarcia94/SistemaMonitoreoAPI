@@ -4,7 +4,6 @@ import lautaro.sistema.monitoreo.Model.MedicionQueue;
 import lautaro.sistema.monitoreo.Model.Resultado;
 import lautaro.sistema.monitoreo.Model.request.MedicionRquestModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +38,7 @@ public class MonitoringRestController extends TimerTask {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<String> createUser(@Valid @RequestBody MedicionRquestModel medicion) {
         colaMedicion.agregarCola(medicion.getMedicion());
-        return new ResponseEntity<>("La medicion ingresada es: "+medicion.getMedicion(), HttpStatus.OK);
+        return new ResponseEntity<>("La medicion ingresada es: " + medicion.getMedicion(), HttpStatus.OK);
     }
 
     @Override
@@ -48,8 +47,8 @@ public class MonitoringRestController extends TimerTask {
         lista.add(resultado);
     }
 
-    public void ejecutarTimer(){
+    public void ejecutarTimer() {
         Timer temp = new Timer();
-        temp.scheduleAtFixedRate(this,1000*30,1000*30);
+        temp.scheduleAtFixedRate(this, 1000 * 30, 1000 * 30);
     }
 }

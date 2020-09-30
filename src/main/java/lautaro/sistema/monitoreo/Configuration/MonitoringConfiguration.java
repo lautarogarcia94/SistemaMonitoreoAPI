@@ -13,27 +13,27 @@ public class MonitoringConfiguration {
 
 
     @Bean
-    public CalcFactory calcFactory(){
+    public CalcFactory calcFactory() {
         return new CalcFactory();
     }
 
     @Bean
-    public CalculoInt calcMaximo(){
+    public CalculoInt calcMaximo() {
         return calcFactory().crearCalculo("maximo");
     }
 
     @Bean
-    public CalculoInt calcMinimo(){
+    public CalculoInt calcMinimo() {
         return calcFactory().crearCalculo("minimo");
     }
 
     @Bean
-    public CalculoInt calcPromedio(){
+    public CalculoInt calcPromedio() {
         return calcFactory().crearCalculo("promedio");
     }
 
     @Bean
-    public Queue<Integer> Cola(){
+    public Queue<Integer> Cola() {
         return new PriorityQueue<Integer>();
     }
 

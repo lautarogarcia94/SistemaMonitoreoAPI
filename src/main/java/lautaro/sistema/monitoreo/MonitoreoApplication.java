@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 public class MonitoreoApplication {
 
     public static void main(String[] args) {
-        ApplicationContext context =  SpringApplication.run(MonitoreoApplication.class, args);
+        ApplicationContext context = SpringApplication.run(MonitoreoApplication.class, args);
         MonitoringRestController controller = (MonitoringRestController) context.getBean("monitoringRestController");
         controller.ejecutarTimer();
     }

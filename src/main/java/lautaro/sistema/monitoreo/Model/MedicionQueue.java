@@ -57,7 +57,7 @@ public class MedicionQueue {
 
         synchronized (cola) {
             cola.add(num);
-            LOGGER.info("Se agrega numero "+num);
+            LOGGER.info("Se agrega numero " + num);
         }
     }
 
@@ -78,7 +78,7 @@ public class MedicionQueue {
 
             borrarCola();
         }
-        Resultado resultado = new Resultado(diferencia,promedio);
+        Resultado resultado = new Resultado(diferencia, promedio);
         return resultado;
     }
 
@@ -103,7 +103,7 @@ public class MedicionQueue {
                 return "La diferencia es " + calculo + ".";
             case "promedio":
                 if (cteM < calculo) {
-                    LOGGER.error("El promedio es "+calculo+", y es mayor al valor "+ cteM +" seteado");
+                    LOGGER.error("El promedio es " + calculo + ", y es mayor al valor " + cteM + " seteado");
                     return "El promedio es " + calculo + ", y es mayor al valor " + cteM + " seteado";
                 }
                 LOGGER.info("El promedio es " + calculo + ".");
