@@ -28,7 +28,13 @@ public class MonitoringRestController extends TimerTask {
     public void setColaMedicion(MedicionQueue colaMedicion) {
         this.colaMedicion = colaMedicion;
     }
-    
+
+
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public List<Resultado> getUsers() {
+        return lista;
+    }
+
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<String> createUser(@Valid @RequestBody MedicionRquestModel medicion) {
