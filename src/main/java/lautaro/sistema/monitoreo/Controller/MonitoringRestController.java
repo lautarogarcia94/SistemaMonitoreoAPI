@@ -34,7 +34,7 @@ public class MonitoringRestController extends TimerTask {
 
     @Override
     public void run() {
-        System.out.println("El timer se ejecuto.");
+        colaMedicion.realizarCalculos();
     }
 
     public void ejecutarTimer(){
