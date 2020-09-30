@@ -1,6 +1,8 @@
 package lautaro.sistema.monitoreo.Controller;
 
+import lautaro.sistema.monitoreo.Model.MedicionQueue;
 import lautaro.sistema.monitoreo.Model.request.MedicionRquestModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,17 @@ import javax.validation.Valid;
 @RequestMapping("monitoring")
 public class MonitoringRestController {
 
+    private MedicionQueue colaMedicion;
+
+    @Autowired
+    public void setColaMedicion(MedicionQueue colaMedicion) {
+        this.colaMedicion = colaMedicion;
+    }
+
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<String> createUser(@Valid @RequestBody MedicionRquestModel medicion) {
+        colaMedicion.agregarCola(medicion.getMedicion());
         return new ResponseEntity<>("La medicion ingresada es: "+medicion.getMedicion(), HttpStatus.OK);
     }
 }
