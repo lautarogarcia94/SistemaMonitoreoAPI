@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @RestController
 @RequestMapping("monitoring")
-public class MonitoringRestController {
+public class MonitoringRestController extends TimerTask {
 
     private MedicionQueue colaMedicion;
 
@@ -28,5 +30,15 @@ public class MonitoringRestController {
     public ResponseEntity<String> createUser(@Valid @RequestBody MedicionRquestModel medicion) {
         colaMedicion.agregarCola(medicion.getMedicion());
         return new ResponseEntity<>("La medicion ingresada es: "+medicion.getMedicion(), HttpStatus.OK);
+    }
+
+    @Override
+    public void run() {
+        System.out.println("El timer se ejecuto.");
+    }
+
+    public void ejecutarTimer(){
+        Timer temp = new Timer();
+        temp.scheduleAtFixedRate(this,1000*30,1000*30);
     }
 }
