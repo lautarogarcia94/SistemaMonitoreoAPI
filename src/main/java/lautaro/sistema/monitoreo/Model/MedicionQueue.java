@@ -53,14 +53,28 @@ public class MedicionQueue {
     }
 
 
+    /**
+     * Agrega un numero a la cola de mediciones, y loguea la accion en un mensaje
+     * @param num int Numero a agregar
+     */
     public void agregarCola(int num) {
-
         synchronized (cola) {
             cola.add(num);
             LOGGER.info("Se agrega numero " + num);
         }
     }
 
+    /**
+     *
+     */
+
+    /**
+     * Realiza los llamados para realizar calcular el minimo, el maximo y el promedio de los datos almacenados
+     * en la cola. Ademas llama al metodo encargado de realizar el control de los resultados, y por ultimo borra
+     * a cola de datos.
+     * Por ultimo genera una instancia de la clase Resultado, para retornar los datos calculados.
+     * @return Resultado
+     */
     public Resultado realizarCalculos() {
         if (colaVacia()) {
             LOGGER.warn("Sin elementos para calcular");
@@ -75,40 +89,50 @@ public class MedicionQueue {
             diferencia = controlar(max - min, "diferencia");
             double prom = calcPromedio.calcular(cola);
             promedio = controlar(prom, "promedio");
-
             borrarCola();
         }
         Resultado resultado = new Resultado(diferencia, promedio);
         return resultado;
     }
 
+    /**
+     * Borra la cola de datos
+     */
     private void borrarCola() {
         cola.clear();
     }
 
 
+    /**
+     * Controla si la cola esta vacia, retorna true si esta vacia y false si no lo esta
+     *
+     * @return boolean
+     */
     private boolean colaVacia() {
-        return cola.peek() == null;
+        return cola.size() == 0;
     }
 
+    /**
+     * Controla los calculos realizados y loguea un mensaje error en caso que sean mayores a los
+     * parametros cteM y cteS.
+     */
     private String controlar(double calculo, String tipo) {
-
+        String mensaje = "";
         switch (tipo) {
             case "diferencia":
+                mensaje = "La diferencia es " + calculo;
                 if (cteS < calculo) {
-                    LOGGER.error("La diferencia es " + calculo + ", y es mayor al valor " + cteS + " seteado");
-                    return "La diferencia es " + calculo + ", y es mayor al valor " + cteS + " seteado";
+                    mensaje += ", y es mayor al valor " + cteS + " seteado";
+                    LOGGER.error(mensaje);
                 }
-                LOGGER.info("La diferencia es " + calculo + ".");
-                return "La diferencia es " + calculo + ".";
+                break;
             case "promedio":
+                mensaje = "El promedio es " + calculo;
                 if (cteM < calculo) {
-                    LOGGER.error("El promedio es " + calculo + ", y es mayor al valor " + cteM + " seteado");
-                    return "El promedio es " + calculo + ", y es mayor al valor " + cteM + " seteado";
+                    mensaje += ", y es mayor al valor " + cteM + " seteado";
+                    LOGGER.error(mensaje);
                 }
-                LOGGER.info("El promedio es " + calculo + ".");
-                return "El promedio es " + calculo + ".";
         }
-        return "";
+        return mensaje;
     }
 }
