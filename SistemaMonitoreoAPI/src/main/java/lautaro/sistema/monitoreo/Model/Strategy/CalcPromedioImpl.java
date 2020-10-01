@@ -1,12 +1,15 @@
 package lautaro.sistema.monitoreo.Model.Strategy;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+import java.text.DecimalFormat;
 import java.util.Queue;
 
 /**
  * Esta clase implementa la interfaz CalculoInt, para realizar el calculo del minimo valor de una cola
  */
+@Component
 public class CalcPromedioImpl implements CalculoInt {
 
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(CalcPromedioImpl.class);
@@ -21,14 +24,21 @@ public class CalcPromedioImpl implements CalculoInt {
     @Override
     public double calcular(Queue<Integer> cola) {
         Double num = 0.0;
+        int size = cola.size();
 
-        if (cola.size() == 0) {
+        if (size == 0) {
             LOGGER.warn("No hay elementos en la cola para calcular el promedio");
             return 0.0;
         }
         for (Integer x : cola) {
+            if(x == null){
+                LOGGER.error("En la cola se encontro un valor nulo");
+                size--;
+                continue;
+            }
             num += x;
         }
-        return num / cola.size();
+        double promedio = num/size;
+        return Math.round(promedio*100)/100.0;
     }
 }
