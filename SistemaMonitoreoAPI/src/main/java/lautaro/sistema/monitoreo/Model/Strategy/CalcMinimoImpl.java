@@ -29,10 +29,21 @@ public class CalcMinimoImpl implements CalculoInt {
             return 0.0;
         }
 
-        int num = cola.peek();
+        boolean  asigneNum = false;
+        int num = 0;
         for (Integer x : cola) {
-            if (num > x) {
+            if(x == null){
+                LOGGER.error("En la cola se encontro un valor nulo");
+                continue;
+            }
+
+            if(asigneNum){
+                if (num > x) {
+                    num = x;
+                }
+            }else{
                 num = x;
+                asigneNum = true;
             }
         }
         return num;
