@@ -29,18 +29,18 @@ public class CalcMaximoImpl implements CalculoInt {
             return 0.0;
         }
 
-        boolean  asigneNum = false;
+        boolean asigneNum = false;
         int num = 0;
         for (Integer x : cola) {
-            if(x == null){
+            if (x == null) {
                 LOGGER.error("En la cola se encontro un valor nulo");
                 continue;
             }
-            if(asigneNum){
+            if (asigneNum) {
                 if (num < x) {
                     num = x;
                 }
-            }else{
+            } else {
                 num = x;
                 asigneNum = true;
             }

@@ -55,6 +55,7 @@ public class MedicionQueue {
 
     /**
      * Agrega un numero a la cola de mediciones, y loguea la accion en un mensaje
+     *
      * @param num int Numero a agregar
      */
     public void agregarCola(int num) {
@@ -69,6 +70,7 @@ public class MedicionQueue {
      * en la cola. Ademas llama al metodo encargado de realizar el control de los resultados, y por ultimo borra
      * a cola de datos.
      * Por ultimo genera una instancia de la clase Resultado, para retornar los datos calculados.
+     *
      * @return Resultado
      */
     public Resultado realizarCalculos() {

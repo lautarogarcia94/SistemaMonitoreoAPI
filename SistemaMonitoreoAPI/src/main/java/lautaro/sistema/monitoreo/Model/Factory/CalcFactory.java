@@ -23,7 +23,7 @@ public class CalcFactory {
      */
     public CalculoInt crearCalculo(String calculo) {
         CalculoInt calculoStrategy = null;
-        if(calculo == null){
+        if (calculo == null) {
             LOGGER.warn("Se realizo llamada al metodo creacCalculo con un parametro nulo");
             return calculoStrategy;
         }

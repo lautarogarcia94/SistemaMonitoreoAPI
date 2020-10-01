@@ -8,9 +8,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class MedicionQueueTests {
@@ -19,20 +16,20 @@ public class MedicionQueueTests {
     private MedicionQueue medicionQueue;
 
     @Test
-    void _1_realizarCalculo(){
+    void _1_realizarCalculo() {
         Resultado resultado = medicionQueue.realizarCalculos();
         assertTrue(resultado.getDiferencia().equals("--"));
         assertTrue(resultado.getPromedio().equals("--"));
     }
 
     @Test
-    void _2_agregarNumero(){
+    void _2_agregarNumero() {
         medicionQueue.agregarCola(3);
-        assertEquals(1,medicionQueue.getCola().size());
+        assertEquals(1, medicionQueue.getCola().size());
     }
 
     @Test
-    void _3_realizarCalculo(){
+    void _3_realizarCalculo() {
 
         medicionQueue.agregarCola(6);
         medicionQueue.agregarCola(5);
@@ -43,7 +40,7 @@ public class MedicionQueueTests {
     }
 
     @Test
-    void _4_realizarCalculo(){
+    void _4_realizarCalculo() {
 
         medicionQueue.agregarCola(6);
         medicionQueue.agregarCola(5);

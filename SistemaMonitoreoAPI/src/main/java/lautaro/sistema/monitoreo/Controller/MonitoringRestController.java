@@ -45,9 +45,9 @@ public class MonitoringRestController extends TimerTask {
      * La medicion debe ser enviada en el cuerpo de la solicitud HTTP, este metodo espera un mensaje
      * como el siguiente:
      * {
-     *     "medicion": "10"
+     * "medicion": "10"
      * }
-     *
+     * <p>
      * Puede recibir este parametro tanto en un JSON, como en un XML.
      *
      * @param medicion numero que será añadido como medicion
@@ -73,7 +73,6 @@ public class MonitoringRestController extends TimerTask {
     /**
      * Ejecuta el timer cada 30 segundos para realizar los calculos sobre la cola
      * de mediciones. Empieza con un delay de 30 segundos en la primera ejecucion.
-     *
      */
     public void ejecutarTimer() {
         Timer temp = new Timer();

@@ -3,7 +3,6 @@ package lautaro.sistema.monitoreo.Model.Strategy;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.text.DecimalFormat;
 import java.util.Queue;
 
 /**
@@ -31,14 +30,14 @@ public class CalcPromedioImpl implements CalculoInt {
             return 0.0;
         }
         for (Integer x : cola) {
-            if(x == null){
+            if (x == null) {
                 LOGGER.error("En la cola se encontro un valor nulo");
                 size--;
                 continue;
             }
             num += x;
         }
-        double promedio = num/size;
-        return Math.round(promedio*100)/100.0;
+        double promedio = num / size;
+        return Math.round(promedio * 100) / 100.0;
     }
 }
