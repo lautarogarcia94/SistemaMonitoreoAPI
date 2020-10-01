@@ -65,10 +65,6 @@ public class MedicionQueue {
     }
 
     /**
-     *
-     */
-
-    /**
      * Realiza los llamados para realizar calcular el minimo, el maximo y el promedio de los datos almacenados
      * en la cola. Ademas llama al metodo encargado de realizar el control de los resultados, y por ultimo borra
      * a cola de datos.
