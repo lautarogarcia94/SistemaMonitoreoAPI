@@ -1,6 +1,5 @@
 package lautaro.sistema.monitoreo;
 
-import lautaro.sistema.monitoreo.Model.Strategy.CalcMaximoImpl;
 import lautaro.sistema.monitoreo.Model.Strategy.CalcPromedioImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

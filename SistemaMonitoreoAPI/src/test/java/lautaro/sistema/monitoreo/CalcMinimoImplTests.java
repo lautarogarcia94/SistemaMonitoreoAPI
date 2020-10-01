@@ -12,7 +12,7 @@ import java.util.Queue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class CalcMinimoImplTest {
+public class CalcMinimoImplTests {
 
     @Autowired
     CalcMinimoImpl calcMinimo;
