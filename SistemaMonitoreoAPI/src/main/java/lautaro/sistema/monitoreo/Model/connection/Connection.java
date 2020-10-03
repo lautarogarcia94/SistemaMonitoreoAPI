@@ -2,9 +2,7 @@ package lautaro.sistema.monitoreo.Model.connection;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
@@ -16,7 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -60,8 +60,33 @@ public class Connection {
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
-
     }
 
+    public List<Resultado> getResultados() {
+        ApiFuture<QuerySnapshot> query = firestoreDB.collection(COLLECTION).get();
 
+        QuerySnapshot querySnapshot = null;
+        try{
+            querySnapshot = query.get();
+        }catch (Exception e){
+            LOGGER.error(e.getMessage());
+        }
+
+        List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+        return generarListaResult(documents);
+    }
+
+    private List<Resultado> generarListaResult(List<QueryDocumentSnapshot> documents){
+        String fecha, diferencia, promedio;
+        List<Resultado> lista = new ArrayList<>();
+
+        for (QueryDocumentSnapshot document : documents) {
+            fecha = document.getId();
+            diferencia = document.get("diferencia").toString();
+            promedio = document.get("promedio").toString();
+            lista.add( new Resultado(fecha, diferencia,promedio));
+        }
+
+        return lista;
+    }
 }

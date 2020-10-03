@@ -4,6 +4,8 @@ import lautaro.sistema.monitoreo.Model.Resultado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ResultadoDAO {
 
@@ -17,5 +19,9 @@ public class ResultadoDAO {
 
     public void insertarResultado(Resultado resultado) {
         connection.insertarResultado(resultado);
+    }
+
+    public List<Resultado> getAllResultados() {
+        return connection.getResultados();
     }
 }

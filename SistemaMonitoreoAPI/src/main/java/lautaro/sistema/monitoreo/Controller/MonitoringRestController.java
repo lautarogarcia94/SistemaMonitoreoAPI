@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,8 +18,6 @@ import java.util.TimerTask;
 @RestController
 @RequestMapping("monitoring")
 public class MonitoringRestController extends TimerTask {
-
-    private ArrayList<Resultado> lista = new ArrayList<>();
 
     private MedicionQueue colaMedicion;
 
@@ -45,7 +42,7 @@ public class MonitoringRestController extends TimerTask {
      */
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public List<Resultado> getUsers() {
-        return lista;
+        return resultadoDAO.getAllResultados();
     }
 
     /**
@@ -74,8 +71,7 @@ public class MonitoringRestController extends TimerTask {
      */
     @Override
     public void run() {
-        Resultado resultado = colaMedicion.realizarCalculos();//TODO: persistir este resultado de alguna forma, para no manejarlo en memoria
-        lista.add(resultado);
+        Resultado resultado = colaMedicion.realizarCalculos();
         resultadoDAO.insertarResultado(resultado);
     }
 

@@ -36,4 +36,10 @@ public class Resultado {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss");
         this.fecha = fecha.format(formatter);
     }
+
+    public Resultado(String fecha, String diferencia, String promedio) {
+        this.fecha = fecha;
+        this.diferencia = diferencia;
+        this.promedio = promedio;
+    }
 }
