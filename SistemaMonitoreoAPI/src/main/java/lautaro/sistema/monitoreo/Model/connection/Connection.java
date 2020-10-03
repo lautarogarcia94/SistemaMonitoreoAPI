@@ -49,26 +49,33 @@ public class Connection {
     }
 
 
+    /**
+     * Este metodo genera una coleccion a partir del objeto Resultado pasado por parametro,
+     * y lo inserta en Cloud Firestore
+     *
+     * @param resultado a insertar en Cloud Firestore
+     */
     public void insertarResultado(Resultado resultado) {
         DocumentReference docRef = firestoreDB.collection(COLLECTION).document(resultado.getFecha());
         Map<String, Object> data = new HashMap<>();
         data.put("diferencia", resultado.getDiferencia());
         data.put("promedio", resultado.getPromedio());
         ApiFuture<WriteResult> result = docRef.set(data);
-        try {
-            LOGGER.info("Update time : " + result.get().getUpdateTime());
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-        }
     }
 
+    /**
+     * Este metodo retorna una lista de Resultados, a partir de los datos almacenados en
+     * Cloud Firestore
+     *
+     * @return List<Resultado>
+     */
     public List<Resultado> getResultados() {
         ApiFuture<QuerySnapshot> query = firestoreDB.collection(COLLECTION).get();
 
         QuerySnapshot querySnapshot = null;
-        try{
+        try {
             querySnapshot = query.get();
-        }catch (Exception e){
+        } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
 
@@ -76,7 +83,13 @@ public class Connection {
         return generarListaResult(documents);
     }
 
-    private List<Resultado> generarListaResult(List<QueryDocumentSnapshot> documents){
+    /**
+     * Este metodo transforma una lista de QueryDocumentSnapshot en una lista de Resultados
+     *
+     * @param documents List<QueryDocumentSnapshot>
+     * @return List<Resultado>
+     */
+    private List<Resultado> generarListaResult(List<QueryDocumentSnapshot> documents) {
         String fecha, diferencia, promedio;
         List<Resultado> lista = new ArrayList<>();
 
@@ -84,7 +97,7 @@ public class Connection {
             fecha = document.getId();
             diferencia = document.get("diferencia").toString();
             promedio = document.get("promedio").toString();
-            lista.add( new Resultado(fecha, diferencia,promedio));
+            lista.add(new Resultado(fecha, diferencia, promedio));
         }
 
         return lista;

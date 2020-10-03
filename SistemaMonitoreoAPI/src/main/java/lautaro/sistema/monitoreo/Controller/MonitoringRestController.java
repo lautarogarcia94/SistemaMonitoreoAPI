@@ -35,8 +35,9 @@ public class MonitoringRestController extends TimerTask {
 
 
     /**
-     * Este metodo retorna una lista de los resultados generados por los calculos, con formato JSON o XML
-     * segun sea solicitado en el GET request sobre el endpoint .../monitoring
+     * Este metodo retorna una lista de los resultados generados por los calculos, que se encuentran almacenados
+     * en Cloud Firestore. Esta lista se devuelve con formato JSON o XML segun sea solicitado en el GET
+     * request sobre el endpoint .../monitoring
      *
      * @return List<Resultado>
      */
@@ -67,7 +68,7 @@ public class MonitoringRestController extends TimerTask {
 
     /**
      * Cuando se da la interrupcion por el Timer, este metodo llama  al metodo realizarCalculos() del objeto
-     * colaMedicion y agrega el resultado a una lista de resultados.
+     * colaMedicion e inserta el resultado en Cloud Firestore
      */
     @Override
     public void run() {
