@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -73,5 +74,11 @@ public class ConnectionTests {
         List<Resultado> lista = connection.getListResultados();
         int size = connection.cantidadColecciones();
         assertEquals(size,lista.size());
+    }
+
+    @Test
+    void _7_getResultadosNulo() {
+        Resultado resultado = connection.getResultado("aaaa"); //busqueda por campo fecha con un parametro que no existe
+        assertNull(resultado);
     }
 }

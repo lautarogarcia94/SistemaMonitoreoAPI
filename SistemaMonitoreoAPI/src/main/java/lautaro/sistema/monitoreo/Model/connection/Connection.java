@@ -101,7 +101,6 @@ public class Connection {
         for (QueryDocumentSnapshot document : documents) {
             lista.add(document.toObject(Resultado.class));
         }
-
         return lista;
     }
 
@@ -144,7 +143,12 @@ public class Connection {
             LOGGER.error(e.getMessage());
         }
 
-        DocumentSnapshot document2 = querySnapshot.getDocuments().get(0);
-        return document2.toObject(Resultado.class);
+        List<QueryDocumentSnapshot> documentList =  querySnapshot.getDocuments();
+
+        if(documentList.size() !=0 ) {
+            DocumentSnapshot document2 = documentList.get(0);
+            return document2.toObject(Resultado.class);
+        }
+        return null;
     }
 }
