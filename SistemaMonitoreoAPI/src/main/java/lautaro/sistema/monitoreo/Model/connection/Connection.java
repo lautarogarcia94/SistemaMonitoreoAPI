@@ -56,8 +56,13 @@ public class Connection {
      * @param resultado a insertar en Cloud Firestore
      */
     public void insertarResultado(Resultado resultado) {
-        DocumentReference docRef = firestoreDB.collection(COLLECTION).document(resultado.getFecha());
+        if (resultado == null) {
+            LOGGER.error("Resultado a ingresar es nulo. No se realiza la insercion");
+            return;
+        }
+        DocumentReference docRef = firestoreDB.collection(COLLECTION).document();
         Map<String, Object> data = new HashMap<>();
+        data.put("fecha", resultado.getFecha());
         data.put("diferencia", resultado.getDiferencia());
         data.put("promedio", resultado.getPromedio());
         ApiFuture<WriteResult> result = docRef.set(data);
@@ -69,7 +74,7 @@ public class Connection {
      *
      * @return List<Resultado>
      */
-    public List<Resultado> getResultados() {
+    public List<Resultado> getListResultados() {
         ApiFuture<QuerySnapshot> query = firestoreDB.collection(COLLECTION).get();
 
         QuerySnapshot querySnapshot = null;
@@ -94,12 +99,52 @@ public class Connection {
         List<Resultado> lista = new ArrayList<>();
 
         for (QueryDocumentSnapshot document : documents) {
-            fecha = document.getId();
-            diferencia = document.get("diferencia").toString();
-            promedio = document.get("promedio").toString();
-            lista.add(new Resultado(fecha, diferencia, promedio));
+            lista.add(document.toObject(Resultado.class));
         }
 
         return lista;
+    }
+
+    /**
+     * Devuelve un int con la cantidad de colecciones en Cloud Firestore
+     *
+     * @return int
+     */
+    public int cantidadColecciones() {
+        ApiFuture<QuerySnapshot> query = firestoreDB.collection(COLLECTION).get();
+        QuerySnapshot querySnapshot = null;
+
+        try {
+            querySnapshot = query.get();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return querySnapshot.size();
+    }
+
+    /**
+     * Devuelve un unico Resultado almacenado en Cloud Firestore, buscando por su ID (fecha de creacion
+     * del resultado). Si no encuentra un resultado con esa fecha, retorna un Resultado nulo.
+     *
+     * @param fecha Es la fecha del resultado a buscar en
+     * @return Resultado
+     */
+    public Resultado getResultado(String fecha) {
+        DocumentReference docRef = firestoreDB.collection(COLLECTION).document(fecha);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = null;
+
+        CollectionReference resultados = firestoreDB.collection(COLLECTION);
+        Query query = resultados.whereEqualTo("fecha", fecha);
+        ApiFuture<QuerySnapshot> futureQuerySnapshot = query.get();
+        QuerySnapshot querySnapshot = null;
+        try {
+            querySnapshot = futureQuerySnapshot.get();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        DocumentSnapshot document2 = querySnapshot.getDocuments().get(0);
+        return document2.toObject(Resultado.class);
     }
 }

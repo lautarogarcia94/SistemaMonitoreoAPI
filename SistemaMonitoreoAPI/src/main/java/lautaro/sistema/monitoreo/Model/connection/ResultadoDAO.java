@@ -34,6 +34,6 @@ public class ResultadoDAO {
      * @return List<Resultado>
      */
     public List<Resultado> getAllResultados() {
-        return connection.getResultados();
+        return connection.getListResultados();
     }
 }
