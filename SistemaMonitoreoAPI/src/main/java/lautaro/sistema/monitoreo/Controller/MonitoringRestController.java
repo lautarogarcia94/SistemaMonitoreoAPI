@@ -2,6 +2,7 @@ package lautaro.sistema.monitoreo.Controller;
 
 import lautaro.sistema.monitoreo.Model.MedicionQueue;
 import lautaro.sistema.monitoreo.Model.Resultado;
+import lautaro.sistema.monitoreo.Model.connection.ResultadoDAO;
 import lautaro.sistema.monitoreo.Model.request.MedicionRquestModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,13 @@ public class MonitoringRestController extends TimerTask {
     private ArrayList<Resultado> lista = new ArrayList<>();
 
     private MedicionQueue colaMedicion;
+
+    private ResultadoDAO resultadoDAO;
+
+    @Autowired
+    public void setResultadoDAO(ResultadoDAO resultadoDAO) {
+        this.resultadoDAO = resultadoDAO;
+    }
 
     @Autowired
     public void setColaMedicion(MedicionQueue colaMedicion) {
@@ -68,6 +76,7 @@ public class MonitoringRestController extends TimerTask {
     public void run() {
         Resultado resultado = colaMedicion.realizarCalculos();//TODO: persistir este resultado de alguna forma, para no manejarlo en memoria
         lista.add(resultado);
+        resultadoDAO.insertarResultado(resultado);
     }
 
     /**
