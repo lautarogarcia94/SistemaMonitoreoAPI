@@ -30,7 +30,7 @@ public class Connection {
 
     private Firestore firestoreDB;
 
-    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MedicionQueue.class);
+    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(Connection.class);
 
     @Autowired
     public void setFirestoreDB() {

@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 public class ResultadoDAO {
 
-    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MedicionQueue.class);
+    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ResultadoDAO.class);
 
     private Connection connection;
 
