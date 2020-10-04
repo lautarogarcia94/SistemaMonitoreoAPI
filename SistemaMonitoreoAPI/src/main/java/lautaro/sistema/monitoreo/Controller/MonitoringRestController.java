@@ -2,6 +2,7 @@ package lautaro.sistema.monitoreo.Controller;
 
 import lautaro.sistema.monitoreo.Model.MedicionQueue;
 import lautaro.sistema.monitoreo.Model.Resultado;
+import lautaro.sistema.monitoreo.Model.connection.ResultadoDAO;
 import lautaro.sistema.monitoreo.Model.request.MedicionRquestModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,9 +19,14 @@ import java.util.TimerTask;
 @RequestMapping("monitoring")
 public class MonitoringRestController extends TimerTask {
 
-    private ArrayList<Resultado> lista = new ArrayList<>();
-
     private MedicionQueue colaMedicion;
+
+    private ResultadoDAO resultadoDAO;
+
+    @Autowired
+    public void setResultadoDAO(ResultadoDAO resultadoDAO) {
+        this.resultadoDAO = resultadoDAO;
+    }
 
     @Autowired
     public void setColaMedicion(MedicionQueue colaMedicion) {
@@ -30,14 +35,15 @@ public class MonitoringRestController extends TimerTask {
 
 
     /**
-     * Este metodo retorna una lista de los resultados generados por los calculos, con formato JSON o XML
-     * segun sea solicitado en el GET request sobre el endpoint .../monitoring
+     * Este metodo retorna una lista de los resultados generados por los calculos, que se encuentran almacenados
+     * en Cloud Firestore. Esta lista se devuelve con formato JSON o XML segun sea solicitado en el GET
+     * request sobre el endpoint .../monitoring
      *
      * @return List<Resultado>
      */
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public List<Resultado> getUsers() {
-        return lista;
+        return resultadoDAO.getAllResultados();
     }
 
     /**
@@ -62,12 +68,12 @@ public class MonitoringRestController extends TimerTask {
 
     /**
      * Cuando se da la interrupcion por el Timer, este metodo llama  al metodo realizarCalculos() del objeto
-     * colaMedicion y agrega el resultado a una lista de resultados.
+     * colaMedicion e inserta el resultado en Cloud Firestore
      */
     @Override
     public void run() {
-        Resultado resultado = colaMedicion.realizarCalculos();//TODO: persistir este resultado de alguna forma, para no manejarlo en memoria
-        lista.add(resultado);
+        Resultado resultado = colaMedicion.realizarCalculos();
+        resultadoDAO.insertarResultado(resultado);
     }
 
     /**
