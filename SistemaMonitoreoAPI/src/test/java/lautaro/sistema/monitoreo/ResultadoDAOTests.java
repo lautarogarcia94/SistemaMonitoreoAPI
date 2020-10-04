@@ -9,6 +9,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -30,7 +32,6 @@ public class ResultadoDAOTests {
         assertEquals(size+1,connection.cantidadColecciones());
     }
 
-
     @Test
     void _2_insertarResultado() {
         Resultado resultado = new Resultado("Prueba Diferencia","Prueba Promedio");
@@ -38,5 +39,36 @@ public class ResultadoDAOTests {
         String fecha = resultado.getFecha();
         Resultado resultadoQuery = connection.getResultado(fecha);
         assertTrue(resultado.equals(resultadoQuery));
+    }
+
+    @Test
+    void _3_insertarResultadoNulo() {
+        int size = connection.cantidadColecciones();
+        Resultado resultado = null;
+        resultadoDAO.insertarResultado(resultado);
+        assertEquals(size,connection.cantidadColecciones());
+    }
+
+    @Test
+    void _4_insertarResultadoPromedioNulo() {
+        int size = connection.cantidadColecciones();
+        Resultado resultado = new Resultado("Prueba diferencia", null);
+        resultadoDAO.insertarResultado(resultado);
+        assertEquals(size,connection.cantidadColecciones());
+    }
+
+    @Test
+    void _5_insertarResultadoCamposNulos() {
+        int size = connection.cantidadColecciones();
+        Resultado resultado = new Resultado(null, null, null);
+        resultadoDAO.insertarResultado(resultado);
+        assertEquals(size,connection.cantidadColecciones());
+    }
+
+    @Test
+    void _6_getListaResultados() {
+        int size = connection.cantidadColecciones();
+        List<Resultado> lista = resultadoDAO.getAllResultados();
+        assertEquals(size,lista.size());
     }
 }
