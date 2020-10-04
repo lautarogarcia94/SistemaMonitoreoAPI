@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Clase que implementa el patron DAO para manejar las inserciones y consultas a la Firebase de Cloud Firestore
+ */
 @Component
 public class ResultadoDAO {
 
@@ -36,4 +39,6 @@ public class ResultadoDAO {
     public List<Resultado> getAllResultados() {
         return connection.getListResultados();
     }
+
+
 }

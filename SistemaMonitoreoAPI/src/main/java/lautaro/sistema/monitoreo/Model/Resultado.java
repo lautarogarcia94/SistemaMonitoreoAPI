@@ -42,4 +42,26 @@ public class Resultado {
         this.diferencia = diferencia;
         this.promedio = promedio;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Resultado)) {
+            return false;
+        }
+        Resultado resultado = (Resultado) obj;
+
+        boolean equal = true;
+        if(!this.fecha.equalsIgnoreCase(resultado.getFecha()))
+            equal=false;
+        if(!this.diferencia.equalsIgnoreCase(resultado.getDiferencia()))
+            equal=false;
+        if(!this.promedio.equalsIgnoreCase(resultado.getPromedio()))
+            equal=false;
+
+        return equal;
+    }
 }

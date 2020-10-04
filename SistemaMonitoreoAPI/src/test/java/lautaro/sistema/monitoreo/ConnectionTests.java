@@ -34,15 +34,11 @@ public class ConnectionTests {
 
     @Test
     void _2_insertarResultado() {
-        int size = connection.cantidadColecciones();
         Resultado resultado = new Resultado("Prueba Diferencia","Prueba Promedio");
         connection.insertarResultado(resultado);
         String fecha = resultado.getFecha();
         Resultado resultadoQuery = connection.getResultado(fecha);
-        String diferenciaQuery = resultadoQuery.getDiferencia();
-        String promedioQuery = resultadoQuery.getPromedio();
-        assertTrue(diferenciaQuery.equalsIgnoreCase("Prueba Diferencia"));
-        assertTrue(promedioQuery.equalsIgnoreCase("Prueba Promedio"));
+        assertTrue(resultado.equals(resultadoQuery));
     }
 
     @Test
